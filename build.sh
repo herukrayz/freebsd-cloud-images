@@ -58,6 +58,7 @@ export ASSUME_ALWAYS_YES=YES
 cd /tmp
 pkg install -y ca_root_nss
 pkg install -y qemu-guest-agent
+pkg install -y bash
 tar xf cloud-init.tar.gz
 cd cloud-init-*
 touch /etc/rc.conf
@@ -84,8 +85,8 @@ pkg install -y python3
         echo '/dev/gpt/rootfs   /       ufs     rw      1       1' >>  /mnt/etc/fstab
     fi
     echo '/dev/gpt/swapfs  none    swap    sw      0       0' >> /mnt/etc/fstab
-
-
+    
+    ln -s /mnt/usr/local/bin/bash /mnt/bin/bash
     echo 'boot_multicons="YES"' >> /mnt/boot/loader.conf
     echo 'boot_serial="YES"' >> /mnt/boot/loader.conf
     echo 'comconsole_speed="115200"' >> /mnt/boot/loader.conf
