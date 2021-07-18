@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 version="${1:-13.0}"
 repo="${2:-canonical/cloud-init}"
 ref="${3:-main}"
