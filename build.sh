@@ -57,6 +57,7 @@ function build {
 export ASSUME_ALWAYS_YES=YES
 cd /tmp
 pkg install -y ca_root_nss
+pkg install -y qemu-guest-agent
 tar xf cloud-init.tar.gz
 cd cloud-init-*
 touch /etc/rc.conf
@@ -65,11 +66,11 @@ pkg install -y python3
 ./tools/build-on-freebsd
 " > /mnt/tmp/cloudify.sh
 
-    if [ -z "${debug}" ]; then # Lock root account
-        echo "pw mod user root -w no" >> /mnt/tmp/cloudify.sh
-    else
+    #if [ -z "${debug}" ]; then # Lock root account
+    #    echo "pw mod user root -w no" >> /mnt/tmp/cloudify.sh
+    #else
         echo 'echo "!234AaAa56" | pw usermod -n root -h 0' >> /mnt/tmp/cloudify.sh
-    fi
+    #fi
 
     chmod +x /mnt/tmp/cloudify.sh
 
