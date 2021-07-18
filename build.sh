@@ -91,6 +91,7 @@ pkg install -y python3
     echo 'comconsole_speed="115200"' >> /mnt/boot/loader.conf
     echo 'autoboot_delay="1"' >> /mnt/boot/loader.conf
     echo 'console="comconsole,efi"' >> /mnt/boot/loader.conf
+    echo 'virtio_console_load="YES"' >> /mnt/boot/loader.conf
     echo '-P' >> /mnt/boot.config
     rm -rf /mnt/tmp/*
     echo 'sshd_enable="YES"' >> /mnt/etc/rc.conf
