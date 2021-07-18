@@ -69,7 +69,7 @@ pkg install -y python3
     #if [ -z "${debug}" ]; then # Lock root account
     #    echo "pw mod user root -w no" >> /mnt/tmp/cloudify.sh
     #else
-        echo 'echo "!234AaAa56" | pw usermod -n root -h 0' >> /mnt/tmp/cloudify.sh
+        echo 'echo "rahasiadong" | pw usermod -n root -h 0' >> /mnt/tmp/cloudify.sh
     #fi
 
     chmod +x /mnt/tmp/cloudify.sh
