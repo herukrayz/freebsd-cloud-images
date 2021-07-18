@@ -6,7 +6,7 @@ debug=$4
 install_media="${install_media:-http}"
 
 set -eux
-root_fs="${root_fs:-zfs}"  # ufs or zfs
+root_fs="${root_fs:-ufs}"  # ufs or zfs
 
 function build {
     VERSION=$1
@@ -94,6 +94,12 @@ pkg install -y python3
     rm -rf /mnt/tmp/*
     echo 'sshd_enable="YES"' >> /mnt/etc/rc.conf
     echo 'sendmail_enable="NONE"' >> /mnt/etc/rc.conf
+    echo 'qemu_guest_agent_enable="YES"' >> /mnt/etc/rc.conf
+    echo 'qemu_guest_agent_flags="-d -v -l /var/log/qemu-ga.log"' >> /mnt/etc/rc.conf
+    echo "datasource:" >> /mnt/etc/cloud/cloud.cfg.d/00-ec2.cfg
+    echo "  Ec2:" >> /mnt/etc/cloud/cloud.cfg.d/00-ec2.cfg
+    echo "    metadata_urls: [ '169.254.169.254' ]" >> /mnt/etc/cloud/cloud.cfg.d/00-ec2.cfg
+    echo "    strict_id: false" >> /mnt/etc/cloud/cloud.cfg.d/00-ec2.cfg
 
     if [ ${root_fs} = "zfs" ]; then
         echo 'zfs_load="YES"' >> /mnt/boot/loader.conf
