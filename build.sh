@@ -99,6 +99,7 @@ pkg install -y py38-cloud-init
     echo "  Ec2:" >> /mnt/usr/local/etc/cloud/cloud.cfg.d/00-ec2.cfg
     echo "    metadata_urls: [ '169.254.169.254' ]" >> /mnt/usr/local/etc/cloud/cloud.cfg.d/00-ec2.cfg
     echo "    strict_id: false" >> /mnt/usr/local/etc/cloud/cloud.cfg.d/00-ec2.cfg
+    echo "This OS/APP Catalog template create by Heru Nugroho" >> /mnt/etc/createdby
 
     if [ ${root_fs} = "zfs" ]; then
         echo 'zfs_load="YES"' >> /mnt/boot/loader.conf
