@@ -87,7 +87,7 @@ pkg install -y py38-cloud-init
     fi
     echo '/dev/gpt/swapfs  none    swap    sw      0       0' >> /mnt/etc/fstab
     
-    ln -s /mnt/usr/local/bin/bash /mnt/bin/bash
+    ln -s /usr/local/bin/bash /mnt/bin/bash
     echo 'boot_multicons="YES"' >> /mnt/boot/loader.conf
     echo 'boot_serial="YES"' >> /mnt/boot/loader.conf
     echo 'comconsole_speed="115200"' >> /mnt/boot/loader.conf
