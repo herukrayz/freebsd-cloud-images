@@ -55,23 +55,24 @@ function build {
     curl -L -o /mnt/tmp/cloud-init.tar.gz "https://github.com/${repo}/archive/${ref}.tar.gz"
     echo "
 export ASSUME_ALWAYS_YES=YES
-cd /tmp
+#cd /tmp
 pkg install -y ca_root_nss
 pkg install -y qemu-guest-agent
 pkg install -y bash
-tar xf cloud-init.tar.gz
-cd cloud-init-*
+#tar xf cloud-init.tar.gz
+#cd cloud-init-*
 touch /etc/rc.conf
 mkdir -p /usr/local/etc/rc.d
-pkg install -y python3
-./tools/build-on-freebsd
+#pkg install -y python3
+pkg install -y
+#./tools/build-on-freebsd
 " > /mnt/tmp/cloudify.sh
 
-    #if [ -z "${debug}" ]; then # Lock root account
-    #    echo "pw mod user root -w no" >> /mnt/tmp/cloudify.sh
-    #else
+    if [ -z "${debug}" ]; then # Lock root account
+        echo "pw mod user root -w no" >> /mnt/tmp/cloudify.sh
+    else
         echo 'echo "rahasiadong" | pw usermod -n root -h 0' >> /mnt/tmp/cloudify.sh
-    #fi
+    fi
 
     chmod +x /mnt/tmp/cloudify.sh
 
@@ -95,14 +96,15 @@ pkg install -y python3
     echo 'virtio_console_load="YES"' >> /mnt/boot/loader.conf
     echo '-P' >> /mnt/boot.config
     rm -rf /mnt/tmp/*
+    echo 'cloudinit_enable="YES"' >> /mnt/etc/rc.conf
     echo 'sshd_enable="YES"' >> /mnt/etc/rc.conf
     echo 'sendmail_enable="NONE"' >> /mnt/etc/rc.conf
     echo 'qemu_guest_agent_enable="YES"' >> /mnt/etc/rc.conf
     echo 'qemu_guest_agent_flags="-d -v -l /var/log/qemu-ga.log"' >> /mnt/etc/rc.conf
-    echo "datasource:" >> /mnt/etc/cloud/cloud.cfg.d/00-ec2.cfg
-    echo "  Ec2:" >> /mnt/etc/cloud/cloud.cfg.d/00-ec2.cfg
-    echo "    metadata_urls: [ '169.254.169.254' ]" >> /mnt/etc/cloud/cloud.cfg.d/00-ec2.cfg
-    echo "    strict_id: false" >> /mnt/etc/cloud/cloud.cfg.d/00-ec2.cfg
+    echo "datasource:" >> /mnt/usr/local/etc/cloud/cloud.cfg.d/00-ec2.cfg
+    echo "  Ec2:" >> /mnt/usr/local/etc/cloud/cloud.cfg.d/00-ec2.cfg
+    echo "    metadata_urls: [ '169.254.169.254' ]" >> /mnt/usr/local/etc/cloud/cloud.cfg.d/00-ec2.cfg
+    echo "    strict_id: false" >> /mnt/usr/local/etc/cloud/cloud.cfg.d/00-ec2.cfg
 
     if [ ${root_fs} = "zfs" ]; then
         echo 'zfs_load="YES"' >> /mnt/boot/loader.conf
