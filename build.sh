@@ -52,20 +52,14 @@ function build {
 
     curl -L ${BASE_URL}/base.txz | tar vxf - -C /mnt
     curl -L ${BASE_URL}/kernel.txz | tar vxf - -C /mnt
-    curl -L -o /mnt/tmp/cloud-init.tar.gz "https://github.com/${repo}/archive/${ref}.tar.gz"
     echo "
 export ASSUME_ALWAYS_YES=YES
-#cd /tmp
 pkg install -y ca_root_nss
 pkg install -y qemu-guest-agent
 pkg install -y bash
-#tar xf cloud-init.tar.gz
-#cd cloud-init-*
 touch /etc/rc.conf
 mkdir -p /usr/local/etc/rc.d
-#pkg install -y python3
 pkg install -y py38-cloud-init
-#./tools/build-on-freebsd
 " > /mnt/tmp/cloudify.sh
 
     if [ -z "${debug}" ]; then # Lock root account
@@ -92,7 +86,7 @@ pkg install -y py38-cloud-init
     echo 'boot_serial="YES"' >> /mnt/boot/loader.conf
     echo 'comconsole_speed="115200"' >> /mnt/boot/loader.conf
     echo 'autoboot_delay="1"' >> /mnt/boot/loader.conf
-    echo 'console="comconsole,efi"' >> /mnt/boot/loader.conf
+    echo 'console="comconsole"' >> /mnt/boot/loader.conf
     echo 'virtio_console_load="YES"' >> /mnt/boot/loader.conf
     echo '-P' >> /mnt/boot.config
     rm -rf /mnt/tmp/*
