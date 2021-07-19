@@ -64,7 +64,7 @@ pkg install -y bash
 touch /etc/rc.conf
 mkdir -p /usr/local/etc/rc.d
 #pkg install -y python3
-pkg install -y
+pkg install -y py38-cloud-init
 #./tools/build-on-freebsd
 " > /mnt/tmp/cloudify.sh
 
